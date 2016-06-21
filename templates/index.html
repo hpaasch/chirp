@@ -2,8 +2,21 @@
 
 
 {% block content %}
+
+
   <h1> Buena Vista, senor!!!! </h1>
 
+  <h3>Showing all {{amount }} chirps</h3>
+  {% for chirp in object_list %} <!-- changed from all_chirps -->
+  <div class="panel panel-default">
+  <div class="panel-heading">
+    <h3 class="panel-title">{{ chirp.bird }}</h3>
+  </div>
+  <div class="panel-body">
+    {{ chirp.body }}
+  </div>
+</div>
 
+{% endfor %}
 
 {% endblock %}
