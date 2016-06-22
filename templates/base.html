@@ -8,8 +8,11 @@
   </head>
   <body>
     <div class="container">
-      <a href="{% url 'login' %}">login</a>
-      <a href="{% url 'logout' %}?next=/">logout</a>
+      <a href="{% url 'login' %}">Login--</a>
+      <a href="{% url 'logout' %}?next=/">Logout--</a>
+      <a href="{% url 'index_view' %}">All Chirps--</a>
+      <a href="{% url 'chirp_create_view' %}">Create chirp--</a>
+
 
       <p>logged in as: {{ request.user }}</p>
       {% block content %}

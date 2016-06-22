@@ -7,16 +7,23 @@
   <h1> Buena Vista, senor!!!! </h1>
 
   <h3>Showing all {{amount }} chirps</h3>
-  {% for chirp in object_list %} <!-- changed from all_chirps -->
-  <div class="panel panel-default">
-  <div class="panel-heading">
-    <h3 class="panel-title">{{ chirp.bird }}</h3>
-  </div>
-  <div class="panel-body">
-    {{ chirp.body }}
-  </div>
-</div>
+    {% for chirp in object_list %} <!-- changed from all_chirps -->
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">{{ chirp.bird }}</h3>
+          </div>
+          <div class="panel-body">
+            {{ chirp.body }}
+              {% if chirp.bird == request.user %}  <!-- hides the URL for even logged in user. different from request.user.is_authenticated-->
+                <br>
+                <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>  <!-- leave href empty for testing-->
+                <!-- note above use of the object with the capture group -->
 
-{% endfor %}
+              {% endif %}
+            <br>
+
+          </div>
+        </div>
+    {% endfor %}
 
 {% endblock %}

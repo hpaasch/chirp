@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Create a chirp</h1>
+  <form class="" action="" method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-default" type="submit" name="chirp_name" value="Chirp it!">
+
+
+  </form>
+
+{% endblock %}
