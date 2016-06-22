@@ -8,3 +8,7 @@ class Chirp(models.Model):
 
     class Meta:
         ordering = ['-created']  # descending order
+
+
+class StopWord(models.Model):  # adding this so a non expert can manage the list
+    word = models.CharField(max_length=26)
