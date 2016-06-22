@@ -122,4 +122,4 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 # i added this
-LOGIN_REDIRECT_URL = '/'
+# LOGIN_REDIRECT_URL = '/'  # took this out so i can go to the profile page

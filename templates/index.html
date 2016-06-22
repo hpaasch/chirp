@@ -7,23 +7,45 @@
   <h1> Buena Vista, senor!!!! </h1>
 
   <h3>Showing all {{amount }} chirps</h3>
-    {% for chirp in object_list %} <!-- changed from all_chirps -->
+<div class='row'>
+    <div class="col-md-6">
+      {% for chirp in object_list %} <!-- changed from all_chirps -->
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h3 class="panel-title">{{ chirp.bird }}</h3>
+            </div>
+                  <div class="panel-body">
+                    {{ chirp.body }}
+                      {% if chirp.bird == request.user %}  <!-- hides the URL for even logged in user. different from request.user.is_authenticated-->
+                        <br>
+                        <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>  <!-- leave href empty for testing-->
+                        <!-- note above use of the object with the capture group -->
+                        <br>
+                        <a class="btn btn-danger" href="{% url 'chirp_delete_view' chirp.pk %}">Delete Chirp</a>
+                      {% endif %}
+                    <br>
+                  </div>
+                </div>
+      {% endfor %}
+
+    </div>
+    {% if request.user.is_authenticated %}
+
+      <div class="col-md-6">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">{{ chirp.bird }}</h3>
-          </div>
-          <div class="panel-body">
-            {{ chirp.body }}
-              {% if chirp.bird == request.user %}  <!-- hides the URL for even logged in user. different from request.user.is_authenticated-->
-                <br>
-                <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>  <!-- leave href empty for testing-->
-                <!-- note above use of the object with the capture group -->
+            <h3 class="panel-title">Write a chirp</h3>
+              </div>
+                <div class="panel-body">
+                  <form class="" action="" method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input class="btn btn-default" type="submit" name="chirp_name" value="Chirp it!">
 
-              {% endif %}
-            <br>
 
-          </div>
-        </div>
-    {% endfor %}
+                  </form>
+      {% endif %}
+      </div>
+</div>
 
 {% endblock %}
