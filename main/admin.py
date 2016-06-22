@@ -1,7 +1,9 @@
 from django.contrib import admin
 
+
+
 # Register your models here.
-from main.models import Chirp, StopWord
+from main.models import Chirp, StopWord, Profile
 
 class ChirpAdmin(admin.ModelAdmin):
     list_display = ['body', 'bird']
@@ -15,3 +17,4 @@ class StopWordAdmin(admin.ModelAdmin):  # to help the non expert maintain the li
 
 admin.site.register(Chirp, ChirpAdmin)
 admin.site.register(StopWord, StopWordAdmin)
+admin.site.register(Profile)
