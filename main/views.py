@@ -2,8 +2,12 @@ from django.shortcuts import render
 from django.views.generic import TemplateView, ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView  # note this import
 from django.core.urlresolvers import reverse_lazy
+from django.contrib.auth.forms import AuthenticationForm
+
 
 from main.models import Chirp, StopWord, Profile
+from main.forms import ProfileUpdateForm
+
 
 # class IndexView(TemplateView):
 #     template_name = 'index.html'
@@ -23,6 +27,13 @@ class IndexView(CreateView):
         context = super().get_context_data(**kwargs)  # boilerplate... ditch the args for super python3!!
         context['object_list'] = Chirp.objects.all()
         context['amount'] = Chirp.objects.all().count()  # on-the-fly calculations can happen here
+        if self.request.user.is_authenticated():
+            context["profile_form"] = ProfileUpdateForm(initial={
+                "favorite_bird": self.request.user.profile.favorite_bird,
+                "photo": self.request.user.profile.photo
+            })
+        else:
+            context["login_form"] = AuthenticationForm()
         return context
 
     def form_valid(self, form):
@@ -80,8 +91,10 @@ class ChirpDetailView(DetailView):
 
 
 class ProfileUpdateView(UpdateView):
-    fields = ['favorite_bird']
-    success_url = reverse_lazy('profile_update_view')
+    fields = ['favorite_bird', 'photo']
+    # success_url = reverse_lazy('profile_update_view')
+    success_url = reverse_lazy('index_view')
+
 
     # def get_queryset(self):
     #     return Profile.objects.filter(user=self.request.user)   because we didn't want to mess with PK slug

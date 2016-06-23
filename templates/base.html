@@ -1,23 +1,22 @@
 {% load staticfiles %}
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>HEP Chirp</title>
-    <link rel="stylesheet" href='{% static "main/css/bootstrap.css" %}' media="screen" title="bootstrap css" charset="utf-8">
-  </head>
-  <body>
-    <div class="container">
-      <a href="{% url 'login' %}">Login--</a>
-      <a href="{% url 'logout' %}?next=/">Logout--</a>
-      <a href="{% url 'index_view' %}">All Chirps--</a>
-      {# <a href="{% url 'chirp_create_view' %}">Create chirp--</a>#}
-
-
-      <p>logged in as: {{ request.user }}</p>
-      {% block content %}
-        No content provided
-      {% endblock %}
-    </div>
-  </body>
+    <head>
+        <meta charset="utf-8">
+        <title>Chirp Chirp</title>
+        <link rel="stylesheet" href='{% static "main/css/bootstrap.css" %}' media="screen" title="bootstrap css" charset="utf-8">
+        <link rel="stylesheet" href='{% static "main/css/main.css" %}' media="screen" charset="utf-8">
+    </head>
+    <body>
+        <br>
+        <div class="container">
+            <a href="{% url 'index_view' %}">All Chirps!</a>
+            <a href="{% url 'login' %}">Login</a>
+            <a href="{% url 'logout' %}?next=/">Logout</a>
+            {{ request.user }}
+            {% block content %}
+                No content provided
+            {% endblock %}
+        </div>
+    </body>
 </html>

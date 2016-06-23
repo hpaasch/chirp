@@ -1,51 +1,81 @@
-{% extends 'base.html' %}
-
+{% extends "base.html" %}
 
 {% block content %}
-
-
-  <h1> Buena Vista, senor!!!! </h1>
-
-  <h3>Showing all {{amount }} chirps</h3>
-<div class='row'>
-    <div class="col-md-6">
-      {% for chirp in object_list %} <!-- changed from all_chirps -->
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">{{ chirp.bird }}</h3>
-            </div>
-                  <div class="panel-body">
-                    {{ chirp.body }}
-                      {% if chirp.bird == request.user %}  <!-- hides the URL for even logged in user. different from request.user.is_authenticated-->
-                        <br>
-                        <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>  <!-- leave href empty for testing-->
-                        <!-- note above use of the object with the capture group -->
-                        <br>
-                        <a class="btn btn-danger" href="{% url 'chirp_delete_view' chirp.pk %}">Delete Chirp</a>
-                      {% endif %}
-                    <br>
-                  </div>
-                </div>
-      {% endfor %}
-
-    </div>
-    {% if request.user.is_authenticated %}
-
-      <div class="col-md-6">
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h3 class="panel-title">Write a chirp</h3>
+    <h1>Welcome to Chirper!</h1>
+    <h4>{{ amount }} chirps</h4>
+    <div class="row">
+        <div class="col-md-6">
+            {% for chirp in object_list %}
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">
+                    <img class="thumb" src="{{ chirp.bird.profile.photo_url }}" alt="" />
+                    {{ chirp.bird }}
+                </h3>
               </div>
-                <div class="panel-body">
+              <div class="panel-body">
+                {{ chirp.body }}
+                {% if chirp.bird == request.user %}
+                    <br>
+                    <a href="{% url 'chirp_detail_view' chirp.pk %}">Click here for details.</a>
+                    <br>
+                    <form class="" action="{% url 'chirp_delete_view' chirp.pk %}" method="post">
+                        {% csrf_token %}
+                        <input type="submit" name="delete_button" value="Delete Chirp NOW!">
+                    </form>
+                    <a class="btn btn-danger" href="{% url 'chirp_delete_view' chirp.pk %}">Delete Chirp</a>
+                {% endif %}
+              </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if request.user.is_authenticated %}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Chirp Somethin'</h3>
+              </div>
+              <div class="panel-body">
                   <form class="" action="" method="post">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input class="btn btn-default" type="submit" name="chirp_name" value="Chirp it!">
-
-
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      <input class="btn btn-default" type="submit" name="chirp" value="Chirp!">
                   </form>
-      {% endif %}
-      </div>
-</div>
+              </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Update your profile</h3>
+              </div>
+              <div class="panel-body">
+                  <img src="{{ request.user.profile.photo_url }}" alt="" />
+
+                  <form class="" action="{% url 'profile_update_view' %}" method="post" enctype="multipart/form-data">
+                      {% csrf_token %}
+                      {{ profile_form.as_p }}
+                      <input class="btn btn-default" type="submit" name="chirp" value="Update Profile">
+                  </form>
+              </div>
+            </div>
+        </div>
+        {% else %}
+        <div class="col-md-6">
+            <div class="panel panel-default">
+              <div class="panel-heading">
+                <h3 class="panel-title">Login to Chirper</h3>
+              </div>
+              <div class="panel-body">
+                  <form class="" action="{% url 'login' %}" method="post">
+                      {% csrf_token %}
+                      {{ login_form.as_p }}
+                      <input class="btn btn-default" type="submit" name="chirp" value="Login">
+                  </form>
+              </div>
+            </div>
+        </div>
+        {% endif %}
+    </div>
 
 {% endblock %}

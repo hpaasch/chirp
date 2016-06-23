@@ -1,11 +1,16 @@
+<!-- DEADFILE -->
+
+
 {% extends "base.html" %}
 
 {% block content %}
-  <form class="" action="" method="post">
-{% csrf_token %}
-{{ form.as_p }}
-<input class="btn btn-success" type="submit" name="profile_update" value="Update profile">
+  <h1>Profile</h1>
 
+  <img src='{{ object.photo_url }}' alt='' />
+
+  <form class="" action="" method="post" enctype='multipart/form-data'>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input class="btn btn-success" type="submit" name="profile_update" value="Update profile">
   </form>
-
 {% endblock %}

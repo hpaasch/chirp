@@ -19,6 +19,13 @@ class StopWord(models.Model):  # adding this so a non expert can manage the list
 class Profile(models.Model):
     user = models.OneToOneField('auth.user')  # this ties to the Django table and expands
     favorite_bird = models.CharField(max_length=100, null=True)
+    photo = models.ImageField(upload_to='profile_photos', null=True, blank=True, verbose_name='Profile photo')  #name of the directory
+    # overrides label name that user sees
+    @property
+    def photo_url(self):  # created a property to make ti possbile to call object.photo_url in template or view
+        if self.photo:
+            return self.photo.url
+        return "https://c2.staticflickr.com/4/3080/3162731295_1e33a2a077.jpg"
 
 
 @receiver(post_save, sender=StopWord)  # post_save is the signal i want to subscribe to

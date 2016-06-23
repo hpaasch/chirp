@@ -119,7 +119,8 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
 
+# below here all added
 STATIC_URL = '/static/'
-
-# i added this
-# LOGIN_REDIRECT_URL = '/'  # took this out so i can go to the profile page
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR
+LOGIN_REDIRECT_URL = '/'  # took this out so i can go to the profile page
